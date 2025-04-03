@@ -25,7 +25,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
             //print('aaa');
           },
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 15),
             child: Row(
               children: [
                 Column(

@@ -38,6 +38,7 @@ class WidgetTree extends StatelessWidget {
           return pages.elementAt(selectedPage);
         },
       ),
+
       bottomNavigationBar: NavbarWidget(),
 
       floatingActionButtonLocation:
