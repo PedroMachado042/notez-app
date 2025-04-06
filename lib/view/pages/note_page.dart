@@ -114,7 +114,8 @@ class _NotePageState extends State<NotePage> {
     );
   }
 
-  void shiftValuesBack(int missingKey) { // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
+  void shiftValuesBack(int missingKey) {
+    // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
     int lastKey = _myBox.keys.cast<int>().reduce(
       (a, b) => a > b ? a : b,
     );
