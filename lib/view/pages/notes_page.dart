@@ -15,6 +15,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState;
+    notesLenght.value = _myBox.length;
     setState(() {});
   }
 
@@ -35,7 +36,6 @@ class _NotesPageState extends State<NotesPage> {
                 value,
                 (index) => NotesContainerWidget(id: index),
               ),
-              
             );
           },
         ),

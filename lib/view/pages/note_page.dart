@@ -100,7 +100,7 @@ class _NotePageState extends State<NotePage> {
                 controller: controllerTxt,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
-                style: TextStyle(height: 2.5, fontSize: 16),
+                style: TextStyle(height: 2.2, fontSize: 16),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.white30),
                   hintText: 'Escreva suas notas aqui',

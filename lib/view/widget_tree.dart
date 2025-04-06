@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/note_page.dart';
 import 'package:notez/view/pages/notes_page.dart';
+import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/pages/tasks_page.dart';
 import 'package:notez/view/widgets/navbar_widget.dart';
 
@@ -41,7 +42,8 @@ class _WidgetTreeState extends State<WidgetTree> {
               notesLenght.value = _myBox.length;
               print(notesLenght.value);
               print(_myBox.get(_myBox.length - 1)[0]);
-              if (_myBox.get(_myBox.length - 1)[0] == '') { //null title safety
+              if (_myBox.get(_myBox.length - 1)[0] == '') {
+                //null title safety
                 _myBox.delete(_myBox.length - 1);
                 notesLenght.value -= 1;
               }
@@ -49,13 +51,20 @@ class _WidgetTreeState extends State<WidgetTree> {
           },
         ),
       ),
-      drawer: Drawer(child: DrawerHeader(child: Text('Texto'))),
+      drawer: Drawer(child: DrawerHeader(child: Text('Profile'))),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Notez', style: TextStyle(fontSize: 25)),
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsPage(),
+                ),
+              );
+              //getData();
             },
             icon: Icon(Icons.settings),
           ),
