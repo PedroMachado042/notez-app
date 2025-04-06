@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/view/pages/note_page.dart';
 
-class NotesContainerWidget extends StatelessWidget {
-  const NotesContainerWidget({super.key});
+class NotesContainerWidget extends StatefulWidget {
+  const NotesContainerWidget({super.key, required this.id});
+  final int id;
+
+  @override
+  State<NotesContainerWidget> createState() =>
+      _NotesContainerWidgetState();
+}
+
+class _NotesContainerWidgetState extends State<NotesContainerWidget> {
+  final _myBox = Hive.box('mybox');
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +28,12 @@ class NotesContainerWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NotePage()),
-            );
+              MaterialPageRoute(
+                builder: (context) => NotePage(id: widget.id),
+              ),
+            ).then((value) {         //refresh text value in containers when come back
+              setState(() {});
+            });
           },
           child: Padding(
             padding: EdgeInsets.all(20),
@@ -27,11 +41,17 @@ class NotesContainerWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Anotações', //Titulo
+                  _myBox.get(widget.id)[0].toString(), //Titulo
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.teal, fontSize: 20),
                 ),
                 Text(
-                  'Fazer isso aqui', //descrição ou linha mais recente
+                  _myBox
+                      .get(widget.id)[1]
+                      .toString(), //descrição ou linha mais recente
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
