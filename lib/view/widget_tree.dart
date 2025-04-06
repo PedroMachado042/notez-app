@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
-import 'package:notez/main.dart';
 import 'package:notez/view/pages/note_page.dart';
 import 'package:notez/view/pages/notes_page.dart';
 import 'package:notez/view/pages/tasks_page.dart';
@@ -57,8 +56,6 @@ class _WidgetTreeState extends State<WidgetTree> {
         actions: [
           IconButton(
             onPressed: () {
-              _myBox.clear();
-              notesLenght.value = 0;
             },
             icon: Icon(Icons.settings),
           ),

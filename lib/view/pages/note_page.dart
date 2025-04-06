@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/notifiers.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key, required this.id});
@@ -55,10 +56,22 @@ class _NotePageState extends State<NotePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+          PopupMenuButton(
+            itemBuilder:
+                (context) => [
+                  PopupMenuItem(child: Text('Add Tag')),
+                  PopupMenuItem(
+                    child: Text('Delete'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      shiftValuesBack(widget.id);
+                      notesLenght.value -= 1;
+                    },
+                  ),
+                ],
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -99,5 +112,21 @@ class _NotePageState extends State<NotePage> {
         ),
       ),
     );
+  }
+
+  void shiftValuesBack(int missingKey) { // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
+    int lastKey = _myBox.keys.cast<int>().reduce(
+      (a, b) => a > b ? a : b,
+    );
+
+    for (int i = missingKey; i < lastKey; i++) {
+      if (_myBox.containsKey(i + 1)) {
+        var nextValue = _myBox.get(i + 1);
+        _myBox.put(i, nextValue);
+      }
+    }
+    _myBox.delete(
+      lastKey,
+    ); // Remove the last entry to avoid duplicates
   }
 }
