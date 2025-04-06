@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/main.dart';
 import 'package:notez/view/pages/note_page.dart';
 import 'package:notez/view/pages/notes_page.dart';
 import 'package:notez/view/pages/tasks_page.dart';
@@ -40,7 +41,11 @@ class _WidgetTreeState extends State<WidgetTree> {
               print(_myBox.toMap());
               notesLenght.value = _myBox.length;
               print(notesLenght.value);
-              setState(() {});
+              print(_myBox.get(_myBox.length - 1)[0]);
+              if (_myBox.get(_myBox.length - 1)[0] == '') { //null title safety
+                _myBox.delete(_myBox.length - 1);
+                notesLenght.value -= 1;
+              }
             });
           },
         ),

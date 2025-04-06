@@ -73,7 +73,7 @@ class _NotePageState extends State<NotePage> {
                 //Titulo
                 onChanged: (value) => writeData(),
                 controller: controllerTitle,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.white30),
                   hintText: 'Título',
