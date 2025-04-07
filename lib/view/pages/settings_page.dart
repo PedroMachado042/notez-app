@@ -11,7 +11,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,17 +71,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           FilledButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              _myBox.clear();
+                              notesBox.clear();
                               notesLenght.value = 0;
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
-                                SnackBar(
-                                  content: Text('All notes were deleted...'),
-                                  duration: Duration(seconds: 3),
-                                  behavior: SnackBarBehavior.fixed,
-                                ),
-                              );
+                            
                             },
                             child: Text(
                               'Delete',

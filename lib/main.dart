@@ -8,7 +8,8 @@ void main() async {
   await Hive.initFlutter();
 
   // open the box
-  var box = await Hive.openBox('mybox');
+  // ignore: unused_local_variable
+  var notesBox = await Hive.openBox('notesBox');
 
   runApp(const MyApp());
 }

@@ -18,7 +18,7 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +27,65 @@ class _WidgetTreeState extends State<WidgetTree> {
         height: 60,
         width: 60,
         child: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(160, 0, 150, 135),
+          backgroundColor: const Color.fromARGB(
+            255,
+            6,
+            99,
+            92,
+          ), //(160, 0, 150, 135)
           shape: CircleBorder(),
           child: Icon(Icons.add, size: 35),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotePage(id: _myBox.length),
-              ),
-            ).then((value) {
-              //refresh text value in containers when come back
-              print(_myBox.toMap());
-              notesLenght.value = _myBox.length;
-              print(notesLenght.value);
-              print(_myBox.get(_myBox.length - 1)[0]);
-              if (_myBox.get(_myBox.length - 1)[0] == '') {
-                //null title safety
-                _myBox.delete(_myBox.length - 1);
-                notesLenght.value -= 1;
-              }
-            });
+            if (selectedPageNotifier.value == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotePage(id: notesBox.length),
+                ),
+              ).then((value) {
+                //refresh text value in containers when come back
+                print(notesBox.toMap());
+                notesLenght.value = notesBox.length;
+                if (notesBox.get(notesBox.length - 1)[0] == '') {
+                  //null title safety
+                  notesBox.delete(notesBox.length - 1);
+                  notesLenght.value -= 1;
+                }
+              });
+            } else {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+
+                    alignment: Alignment(0, .65),
+                    //shape: BeveledRectangleBorder(),
+                    content: Row(
+                        children: [
+                          Expanded(child: TextField()),
+                          Icon(Icons.square_outlined),
+                        ],
+                      ),
+                    actions: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.alarm),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text('Create'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
         ),
       ),

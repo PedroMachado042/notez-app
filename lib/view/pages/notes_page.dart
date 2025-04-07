@@ -11,11 +11,11 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
   @override
   void initState() {
     super.initState;
-    notesLenght.value = _myBox.length;
+    notesLenght.value = notesBox.length;
     setState(() {});
   }
 

@@ -12,7 +12,7 @@ class NotesContainerWidget extends StatefulWidget {
 }
 
 class _NotesContainerWidgetState extends State<NotesContainerWidget> {
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +41,13 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _myBox.get(widget.id)[0].toString(), //Titulo
+                  notesBox.get(widget.id)[0].toString(), //Titulo
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.teal, fontSize: 20),
                 ),
                 Text(
-                  _myBox
+                  notesBox
                       .get(widget.id)[1]
                       .toString(), //descrição ou linha mais recente
                   maxLines: 1,

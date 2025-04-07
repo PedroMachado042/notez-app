@@ -34,13 +34,9 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                     Text(
                       'Task', //Titulo
                       style: TextStyle(
-                        color: Colors.teal,
+                        //color: Colors.teal,
                         fontSize: 20,
                       ),
-                    ),
-                    Text(
-                      'Fazer isso aqui', //descrição ou linha mais recente
-                      style: TextStyle(fontSize: 12),
                     ),
                   ],
                 ),

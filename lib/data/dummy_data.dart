@@ -50,10 +50,9 @@ Código Limpo""",
 -Confúcio''',
     ],
   ];
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
   a.forEach((i) {
-    _myBox.put(a.indexOf(i), a[a.indexOf(i)]);
+    notesBox.put(a.indexOf(i), a[a.indexOf(i)]);
   });
-  notesLenght.value = _myBox.length;
-  print(_myBox.toMap());
+  notesLenght.value = notesBox.length;
 }

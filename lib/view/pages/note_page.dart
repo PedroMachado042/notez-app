@@ -11,24 +11,24 @@ class NotePage extends StatefulWidget {
 }
 
 class _NotePageState extends State<NotePage> {
-  final _myBox = Hive.box('mybox');
+  final notesBox = Hive.box('notesBox');
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerTxt = TextEditingController();
 
   // write data
   void writeData() {
-    _myBox.put(widget.id, [controllerTitle.text, controllerTxt.text]);
+    notesBox.put(widget.id, [controllerTitle.text, controllerTxt.text]);
   }
 
   //read data
   void readData() {
-    if (_myBox.get(widget.id)[0] != null) {
-      controllerTitle.text = _myBox.get(widget.id)[0];
+    if (notesBox.get(widget.id)[0] != null) {
+      controllerTitle.text = notesBox.get(widget.id)[0];
     } else {
       controllerTitle.text = "";
     }
-    if (_myBox.get(widget.id)[1] != null) {
-      controllerTxt.text = _myBox.get(widget.id)[1];
+    if (notesBox.get(widget.id)[1] != null) {
+      controllerTxt.text = notesBox.get(widget.id)[1];
     } else {
       controllerTxt.text = "";
     }
@@ -36,13 +36,13 @@ class _NotePageState extends State<NotePage> {
 
   //delet data
   void deleteData() {
-    _myBox.clear();
+    notesBox.clear();
   }
 
   @override
   void initState() {
     super.initState;
-    if (!_myBox.containsKey(
+    if (!notesBox.containsKey(
       widget.id,
     )) //acessing inexistent key error
     {
@@ -116,17 +116,17 @@ class _NotePageState extends State<NotePage> {
 
   void shiftValuesBack(int missingKey) {
     // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
-    int lastKey = _myBox.keys.cast<int>().reduce(
+    int lastKey = notesBox.keys.cast<int>().reduce(
       (a, b) => a > b ? a : b,
     );
 
     for (int i = missingKey; i < lastKey; i++) {
-      if (_myBox.containsKey(i + 1)) {
-        var nextValue = _myBox.get(i + 1);
-        _myBox.put(i, nextValue);
+      if (notesBox.containsKey(i + 1)) {
+        var nextValue = notesBox.get(i + 1);
+        notesBox.put(i, nextValue);
       }
     }
-    _myBox.delete(
+    notesBox.delete(
       lastKey,
     ); // Remove the last entry to avoid duplicates
   }
