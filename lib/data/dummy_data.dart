@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 
 void loadDummy() {
-  List a = [
+  List n = [
     [
       'Lista de Compras',
       '- mamão \n- banana \n- ovos \n- presunto \n- pizza \n- doritos',
@@ -50,9 +50,18 @@ Código Limpo""",
 -Confúcio''',
     ],
   ];
+  List t = [['Ler um livro', false], ['Cortar a grama', false], ['Ir ao mercado', false], ];
+
   final notesBox = Hive.box('notesBox');
-  a.forEach((i) {
-    notesBox.put(a.indexOf(i), a[a.indexOf(i)]);
+  final tasksBox = Hive.box('tasksBox');
+
+  t.forEach((i) {
+    tasksBox.put(t.indexOf(i), t[t.indexOf(i)]);
+  });
+  tasksLenght.value = tasksBox.length;
+
+  n.forEach((i) {
+    notesBox.put(n.indexOf(i), n[n.indexOf(i)]);
   });
   notesLenght.value = notesBox.length;
 }

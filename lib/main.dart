@@ -10,6 +10,8 @@ void main() async {
   // open the box
   // ignore: unused_local_variable
   var notesBox = await Hive.openBox('notesBox');
+  // ignore: unused_local_variable
+  var tasksBox = await Hive.openBox('tasksBox');
 
   runApp(const MyApp());
 }

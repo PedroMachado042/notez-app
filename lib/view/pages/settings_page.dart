@@ -12,6 +12,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final notesBox = Hive.box('notesBox');
+  final tasksBox = Hive.box('tasksBox');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             MainAxisAlignment.spaceBetween,
                         title: Text('Delete All Notes?'),
                         content: Text(
-                          'there is no comming back, bro',
+                          'there is no coming back, bro',
                         ),
                         actions: [
                           FilledButton(
@@ -73,6 +74,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               Navigator.pop(context);
                               notesBox.clear();
                               notesLenght.value = 0;
+                              tasksBox.clear();
+                              tasksLenght.value = 0;
                             
                             },
                             child: Text(

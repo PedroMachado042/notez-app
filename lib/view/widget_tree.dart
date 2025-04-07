@@ -7,6 +7,7 @@ import 'package:notez/view/pages/notes_page.dart';
 import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/pages/tasks_page.dart';
 import 'package:notez/view/widgets/navbar_widget.dart';
+import 'package:notez/view/widgets/task_create_widget.dart';
 
 List<Widget> pages = [NotesPage(), TasksPage()];
 
@@ -56,33 +57,7 @@ class _WidgetTreeState extends State<WidgetTree> {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-
-                    alignment: Alignment(0, .65),
-                    //shape: BeveledRectangleBorder(),
-                    content: Row(
-                        children: [
-                          Expanded(child: TextField()),
-                          Icon(Icons.square_outlined),
-                        ],
-                      ),
-                    actions: [
-                      Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.alarm),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('Create'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
+                  return TaskCreateWidget();
                 },
               );
             }
