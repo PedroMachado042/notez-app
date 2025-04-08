@@ -32,6 +32,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
                 builder: (context) => NotePage(id: widget.id),
               ),
             ).then((value) {         //refresh text value in containers when come back
+              
               setState(() {});
             });
           },

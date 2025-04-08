@@ -18,8 +18,8 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   DateTime dateTime = DateTime.now();
 
   void playSound() async {
-    await audioPlayer.play(AssetSource('audios/boom.mp3'));
     audioPlayer.setVolume(.5);
+    await audioPlayer.play(AssetSource('audios/boom.mp3'));
   }
 
   @override
