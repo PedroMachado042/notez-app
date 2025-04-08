@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class TasksContainerWidget extends StatefulWidget {
   const TasksContainerWidget({super.key, required this.id});
@@ -13,7 +14,19 @@ class TasksContainerWidget extends StatefulWidget {
 
 class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   final tasksBox = Hive.box('tasksBox');
+  final AudioPlayer audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
+
+  void playSound() async {
+    await audioPlayer.play(AssetSource('audios/boom.mp3'));
+    audioPlayer.setVolume(.5);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.setReleaseMode(ReleaseMode.stop);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +79,8 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                                 size: 17,
                               ),
                               Text(
-                                tasksBox.get(widget.id)[2].day!=dateTime.day
+                                tasksBox.get(widget.id)[2].day !=
+                                        dateTime.day
                                     ? ' ${tasksBox.get(widget.id)[2].day.toString().padLeft(2, '0')}/${tasksBox.get(widget.id)[2].month.toString().padLeft(2, '0')}  ${tasksBox.get(widget.id)[2].hour}:${tasksBox.get(widget.id)[2].minute.toString().padLeft(2, '0')}'
                                     : ' ${tasksBox.get(widget.id)[2].hour}:${tasksBox.get(widget.id)[2].minute.toString().padLeft(2, '0')}',
                                 style: TextStyle(
@@ -87,12 +101,13 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                         value: tasksBox.get(widget.id)[1],
                         onChanged: (value) {
                           setState(() {
+                            print(tasksBox.toMap());
+                            value == true ? playSound() : 0;
                             tasksBox.put(widget.id, [
                               tasksBox.get(widget.id)[0],
                               value,
                               tasksBox.get(widget.id)[2],
                             ]);
-                            print(tasksBox.toMap());
                           });
                         },
                       ),
@@ -101,18 +116,21 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                 ),
               ),
             ),
-          ) /*      //Black thing that overlays task when done
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ), // Adjust opacity as needed
+          ), //Black thing that overlays task when done
+          if (tasksBox.get(widget.id)[1])
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ), // Adjust opacity as needed
+                  ),
+                ),
               ),
             ),
-          ),*/,
         ],
       ),
     );
