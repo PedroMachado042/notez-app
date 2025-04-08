@@ -50,7 +50,7 @@ Código Limpo""",
 -Confúcio''',
     ],
   ];
-  List t = [['Ler um livro', false], ['Cortar a grama', false], ['Ir ao mercado', false], ];
+  List t = [['Ler um livro', false,0], ['Cortar a grama', false,DateTime.now()], ['Ir ao mercado', false,0], ];
 
   final notesBox = Hive.box('notesBox');
   final tasksBox = Hive.box('tasksBox');

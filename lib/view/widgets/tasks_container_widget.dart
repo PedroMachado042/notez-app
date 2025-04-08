@@ -13,6 +13,7 @@ class TasksContainerWidget extends StatefulWidget {
 
 class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   final tasksBox = Hive.box('tasksBox');
+  DateTime dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,8 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 20,
-                  vertical: 10,
+                  vertical: // essa deu orgulho
+                      tasksBox.get(widget.id)[2] != 0 ? 20 : 10,
                 ),
                 child: Row(
                   children: [
@@ -55,6 +57,25 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                             ),
                           ),
                         ),
+                        if (tasksBox.get(widget.id)[2] != 0)
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                color: Colors.teal,
+                                size: 17,
+                              ),
+                              Text(
+                                tasksBox.get(widget.id)[2].day!=dateTime.day
+                                    ? ' ${tasksBox.get(widget.id)[2].day.toString().padLeft(2, '0')}/${tasksBox.get(widget.id)[2].month.toString().padLeft(2, '0')}  ${tasksBox.get(widget.id)[2].hour}:${tasksBox.get(widget.id)[2].minute.toString().padLeft(2, '0')}'
+                                    : ' ${tasksBox.get(widget.id)[2].hour}:${tasksBox.get(widget.id)[2].minute.toString().padLeft(2, '0')}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white38,
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     Spacer(),
@@ -69,6 +90,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                             tasksBox.put(widget.id, [
                               tasksBox.get(widget.id)[0],
                               value,
+                              tasksBox.get(widget.id)[2],
                             ]);
                             print(tasksBox.toMap());
                           });
@@ -79,7 +101,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                 ),
               ),
             ),
-          ),/*      //Black thing that overlays task when done
+          ) /*      //Black thing that overlays task when done
           Positioned.fill(
             child: Padding(
               padding: const EdgeInsets.all(4.0),
@@ -90,7 +112,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                 ), // Adjust opacity as needed
               ),
             ),
-          ),*/
+          ),*/,
         ],
       ),
     );
