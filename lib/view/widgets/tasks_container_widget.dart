@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
+//import 'package:notez/noti_service.dart';
 
 class TasksContainerWidget extends StatefulWidget {
   const TasksContainerWidget({super.key, required this.id});
@@ -16,6 +18,8 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   final tasksBox = Hive.box('tasksBox');
   final AudioPlayer audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
+  bool passedTime = false;
+  Timer? checkTimer;
 
   void playSound() async {
     audioPlayer.setVolume(.5);
@@ -25,7 +29,30 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   @override
   void initState() {
     super.initState();
-    audioPlayer.setReleaseMode(ReleaseMode.stop);
+    if (tasksBox.get(widget.id)[2] != 0) {
+      checkTime();
+      checkTimer = Timer.periodic(Duration(seconds: 5), (timer) {
+        checkTime();
+      });
+    }
+  }
+
+  void checkTime() {
+    DateTime taskTime = tasksBox.get(widget.id)[2];
+    print('checando');
+    if (taskTime.isBefore(DateTime.now())) {
+      if (!passedTime) {
+        setState(() {
+          passedTime = true;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    checkTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -44,6 +71,17 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
               onLongPress: () {
                 shiftValuesBack(widget.id);
                 tasksLenght.value -= 1;
+              },
+              onTap: () {
+                print('passou o tempo: $passedTime');
+                taskTimeEnded();
+                setState(() {});
+                /*
+                NotiService().showNotification(
+                  title: 'Notez',
+                  body: tasksBox.get(widget.id)[0],
+                );
+                */
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -75,7 +113,13 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                             children: [
                               Icon(
                                 Icons.alarm,
-                                color: Colors.teal,
+                                color:
+                                    passedTime == true &&
+                                            !tasksBox.get(
+                                              widget.id,
+                                            )[1]
+                                        ? Colors.red
+                                        : Colors.teal,
                                 size: 17,
                               ),
                               Text(
@@ -85,7 +129,13 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                                     : ' ${tasksBox.get(widget.id)[2].hour}:${tasksBox.get(widget.id)[2].minute.toString().padLeft(2, '0')}',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.white38,
+                                  color:
+                                      passedTime &&
+                                              !tasksBox.get(
+                                                widget.id,
+                                              )[1]
+                                          ? Colors.red
+                                          : Colors.white38,
                                 ),
                               ),
                             ],
@@ -134,6 +184,12 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
         ],
       ),
     );
+  }
+
+  void taskTimeEnded() {
+    if (tasksBox.get(widget.id)[2].isBefore(dateTime)) {
+      passedTime = true;
+    }
   }
 
   // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
