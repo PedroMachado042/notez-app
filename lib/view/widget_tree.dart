@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/pages/drawer/drawer_guest_page.dart';
+import 'package:notez/view/pages/drawer/drawer_page.dart';
 import 'package:notez/view/pages/note_page.dart';
 import 'package:notez/view/pages/notes_page.dart';
 import 'package:notez/view/pages/settings_page.dart';
@@ -20,6 +22,7 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   final notesBox = Hive.box('notesBox');
+  bool? isLogged;
 
   @override
   Widget build(BuildContext context) {
@@ -64,55 +67,7 @@ class _WidgetTreeState extends State<WidgetTree> {
           },
         ),
       ),
-      drawer: Drawer(
-        child: Column(
-          spacing: 5,
-          children: [
-            SizedBox(
-              height: 90,
-              width: double.infinity,
-              child: DrawerHeader(child: Text('Profile')),
-            ),
-            SizedBox(height: 10),
-            CircleAvatar(radius: 45),
-            Text(
-              'Guest',
-              style: TextStyle(fontSize: 22, color: Colors.white54),
-            ),
-            // Text('guest.sus@gmail.com',style: TextStyle(fontSize: 12, color: Colors.white54),),
-            SizedBox(height: 10),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('Login'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black.withAlpha(80),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('Register'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black.withAlpha(80),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                ),
-              ),
-            ),
-            IconButton(onPressed: () {
-              
-            }, icon: Image.asset('assets/images/google_logo.png',height: 25,))
-          ],
-        ),
-      ),
+      drawer: Drawer(child: GuestPage()),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Notez', style: TextStyle(fontSize: 25)),
