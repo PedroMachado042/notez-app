@@ -19,88 +19,91 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(title: Text('Settings')),
       body: Container(
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 30,
-          children: [
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(
-                    50,
-                    0,
-                    150,
-                    135,
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 30,
+            children: [
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(
+                      50,
+                      0,
+                      150,
+                      135,
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  loadDummy();
-                },
-                child: Text(
-                  'Load test notes',
-                  style: TextStyle(fontSize: 18),
+                  onPressed: () {
+                    loadDummy();
+                  },
+                  child: Text(
+                    'Load test notes',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(
-                    40,
-                    244,
-                    67,
-                    54,
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(
+                      40,
+                      244,
+                      67,
+                      54,
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        actionsAlignment:
-                            MainAxisAlignment.spaceBetween,
-                        title: Text('Delete All Notes?'),
-                        content: Text(
-                          'there is no coming back, bro',
-                        ),
-                        actions: [
-                          FilledButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              notesBox.clear();
-                              notesLenght.value = 0;
-                              tasksBox.clear();
-                              tasksLenght.value = 0;
-                            
-                            },
-                            child: Text(
-                              'Delete',
-                              style: TextStyle(color: Colors.red),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          actionsAlignment:
+                              MainAxisAlignment.spaceBetween,
+                          title: Text('Delete All Notes?'),
+                          content: Text(
+                            'there is no coming back, bro',
+                          ),
+                          actions: [
+                            FilledButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                notesBox.clear();
+                                notesLenght.value = 0;
+                                tasksBox.clear();
+                                tasksLenght.value = 0;
+                              
+                              },
+                              child: Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
-                          ),
-                          FilledButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Close'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Text(
-                  'Delete All Notes',
-                  style: TextStyle(fontSize: 18),
+                            FilledButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Delete All Notes',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

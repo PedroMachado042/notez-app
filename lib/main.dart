@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 //import 'package:notez/noti_service.dart';
 import 'package:notez/view/widget_tree.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize hive;
   await Hive.initFlutter();
+  await Firebase.initializeApp();
 
   // open the boxes
   // ignore: unused_local_variable
@@ -14,9 +16,9 @@ void main() async {
   // ignore: unused_local_variable
   var tasksBox = await Hive.openBox('tasksBox');
 
-
   //init notifications
-  //await NotiService().initNotification();
+  //final notiService = NotiService();
+  //await notiService.initNotification();
   runApp(const MyApp());
 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "439184090954",
+    "project_id": "notez-project-c9dac",
+    "storage_bucket": "notez-project-c9dac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439184090954:android:5f917edb8b988b55ba83b3",
+        "android_client_info": {
+          "package_name": "com.example.notez"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ0HOSY4hbvPSCq7cDw6yAZqxcS03jzOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

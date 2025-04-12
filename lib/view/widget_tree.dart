@@ -64,7 +64,55 @@ class _WidgetTreeState extends State<WidgetTree> {
           },
         ),
       ),
-      drawer: Drawer(child: DrawerHeader(child: Text('Profile'))),
+      drawer: Drawer(
+        child: Column(
+          spacing: 5,
+          children: [
+            SizedBox(
+              height: 90,
+              width: double.infinity,
+              child: DrawerHeader(child: Text('Profile')),
+            ),
+            SizedBox(height: 10),
+            CircleAvatar(radius: 45),
+            Text(
+              'Guest',
+              style: TextStyle(fontSize: 22, color: Colors.white54),
+            ),
+            // Text('guest.sus@gmail.com',style: TextStyle(fontSize: 12, color: Colors.white54),),
+            SizedBox(height: 10),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text('Login'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black.withAlpha(80),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text('Register'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black.withAlpha(80),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(onPressed: () {
+              
+            }, icon: Image.asset('assets/images/google_logo.png',height: 25,))
+          ],
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Notez', style: TextStyle(fontSize: 25)),

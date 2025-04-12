@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/services/firestore.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key, required this.id});
@@ -14,10 +15,14 @@ class _NotePageState extends State<NotePage> {
   final notesBox = Hive.box('notesBox');
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerTxt = TextEditingController();
+  final FirestoreService firestoreService = FirestoreService();
 
   // write data
   void writeData() {
-    notesBox.put(widget.id, [controllerTitle.text, controllerTxt.text]);
+    notesBox.put(widget.id, [
+      controllerTitle.text,
+      controllerTxt.text,
+    ]);
   }
 
   //read data
@@ -72,7 +77,12 @@ class _NotePageState extends State<NotePage> {
           ),
         ],
       ),
-
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.check),
+        onPressed: () {
+          firestoreService.addNote(controllerTitle.text);
+        },
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -89,7 +99,7 @@ class _NotePageState extends State<NotePage> {
                 style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.white30),
-                  hintText: 'Título',
+                  hintText: 'Title',
                   border: InputBorder.none,
                 ),
               ),
@@ -103,7 +113,7 @@ class _NotePageState extends State<NotePage> {
                 style: TextStyle(height: 2.2, fontSize: 16),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.white30),
-                  hintText: 'Escreva suas notas aqui',
+                  hintText: 'Write your notes in here...',
                   border: InputBorder.none,
                 ),
               ),
@@ -113,7 +123,6 @@ class _NotePageState extends State<NotePage> {
       ),
     );
   }
-
 
   // EU COPIEI DO GTP, PRECISO APRENDER DEPOIS
   void shiftValuesBack(int missingKey) {

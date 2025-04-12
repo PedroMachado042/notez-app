@@ -35,6 +35,9 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
         checkTime();
       });
     }
+    audioPlayer.setSource(
+      AssetSource('audios/boom.mp3'),
+    ); //settar o audio
   }
 
   void checkTime() {
@@ -74,7 +77,6 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
               },
               onTap: () {
                 print('passou o tempo: $passedTime');
-                taskTimeEnded();
                 setState(() {});
                 /*
                 NotiService().showNotification(
