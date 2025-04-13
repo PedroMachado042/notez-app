@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/services/auth_service.dart';
 
@@ -75,8 +74,7 @@ class _DrawerPageState extends State<DrawerPage> {
           leading: Icon(Icons.logout),
           title: Text("Log Out"),
           onTap: () {
-            isLogged.value = false;
-            AuthService().signout();
+            AuthService().signout(false);
           },
         ),
         ListTile(
@@ -86,8 +84,7 @@ class _DrawerPageState extends State<DrawerPage> {
             style: TextStyle(color: Colors.red),
           ),
           onTap: () {
-            AuthService().signout();
-            AuthService().deleteAccount();
+            AuthService().signout(true);
           },
         ),
       ],

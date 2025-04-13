@@ -64,6 +64,15 @@ class _NotePageState extends State<NotePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            if (user != null) {
+              firestoreService.addNote(widget.id);
+            }
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           PopupMenuButton(
             itemBuilder:
@@ -74,23 +83,15 @@ class _NotePageState extends State<NotePage> {
                     onTap: () {
                       Navigator.pop(context);
                       shiftValuesBack(widget.id);
+                      if (user != null) {
+                        shiftNotesBackInFirestore(widget.id);
+                      }
                       notesLenght.value -= 1;
                     },
                   ),
                 ],
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: false,
-        child: Icon(Icons.check),
-        onPressed: () {
-          firestoreService.addNote(widget.id);
-          //firestoreService.getNotes(widget.id);
-          controllerTitle.text = notesBox.get(widget.id)[0];
-          controllerTxt.text = notesBox.get(widget.id)[1];
-          setState(() {});
-        },
       ),
 
       body: SingleChildScrollView(
@@ -149,5 +150,41 @@ class _NotePageState extends State<NotePage> {
     notesBox.delete(
       lastKey,
     ); // Remove the last entry to avoid duplicates
+  }
+
+  // MAIS UM DO GPT, APRENDER DEPOIS
+  Future<void> shiftNotesBackInFirestore(int missingKey) async {
+    final collection = FirebaseFirestore.instance.collection(
+      user!.email!,
+    );
+    
+    // Descobrir o maior índice atual (última nota)
+    int lastKey = 0;
+    final snapshot = await collection.get();
+    for (var doc in snapshot.docs) {
+      final id = doc.id;
+      if (id.startsWith('notes')) {
+        final index = int.tryParse(id.replaceFirst('notes', ''));
+        if (index != null && index > lastKey) {
+          lastKey = index;
+        }
+      }
+    }
+
+    // Shift: mover notas seguintes para trás
+    for (int i = missingKey; i < lastKey; i++) {
+      final currentDoc = collection.doc('notes$i');
+      final nextDoc = collection.doc('notes${i + 1}');
+
+      final nextSnapshot = await nextDoc.get();
+      if (nextSnapshot.exists) {
+        await currentDoc.set(
+          nextSnapshot.data()!,
+        ); // copia os dados para o anterior
+      }
+    }
+
+    // Deleta o último documento duplicado
+    await collection.doc('notes$lastKey').delete();
   }
 }

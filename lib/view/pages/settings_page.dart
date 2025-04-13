@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/services/firestore.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -40,6 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   onPressed: () {
                     loadDummy();
+                    FirestoreService().addAllNotes();
                   },
                   child: Text(
                     'Load test notes',
@@ -78,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 notesLenght.value = 0;
                                 tasksBox.clear();
                                 tasksLenght.value = 0;
-                              
+                                FirestoreService().deleteCollection();
                               },
                               child: Text(
                                 'Delete',

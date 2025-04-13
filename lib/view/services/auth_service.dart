@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/services/firestore.dart';
 
 class AuthService {
+  final notesBox = Hive.box('notesBox');
   Future<void> signup({
     required String username,
     required String email,
@@ -19,6 +22,7 @@ class AuthService {
       await userCredential.user!.updateDisplayName(username);
       isLogged.value = true;
       Navigator.pop(context);
+      FirestoreService().getAllNotes();
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -52,6 +56,7 @@ class AuthService {
       );
       isLogged.value = true;
       Navigator.pop(context);
+      FirestoreService().getAllNotes();
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
@@ -71,8 +76,11 @@ class AuthService {
 
   //--------------------------------------------------------------------------
 
-  Future<void> signout() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> signout(bool delete) async {
+    delete ? [await FirestoreService().deleteCollection(), await FirebaseAuth.instance.currentUser!.delete()]:await FirebaseAuth.instance.signOut();
+    isLogged.value = false;
+    notesLenght.value = 0;
+    notesBox.clear();
     print('signout');
   }
 
@@ -80,16 +88,8 @@ class AuthService {
 
   Future<void> noUsername() async {
     Fluttertoast.showToast(
-        msg: 'Type a username',
-        backgroundColor: Colors.black87,
-      );
+      msg: 'Type a username',
+      backgroundColor: Colors.black87,
+    );
   }
-  
-  //--------------------------------------------------------------------------
-
-  Future<void> deleteAccount() async {
-    await FirebaseAuth.instance.currentUser!.delete();
-  }
-  
-
 }

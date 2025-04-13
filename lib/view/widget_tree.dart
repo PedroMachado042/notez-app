@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,8 +7,8 @@ import 'package:notez/view/pages/drawer/drawer_guest_page.dart';
 import 'package:notez/view/pages/drawer/drawer_page.dart';
 import 'package:notez/view/pages/note_page.dart';
 import 'package:notez/view/pages/notes_page.dart';
-import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/pages/tasks_page.dart';
+import 'package:notez/view/services/firestore.dart';
 import 'package:notez/view/widgets/navbar_widget.dart';
 import 'package:notez/view/widgets/task_create_widget.dart';
 
@@ -22,8 +23,18 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   final notesBox = Hive.box('notesBox');
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
+  @override
+  void initState() {
+    super.initState();
+    if (user != null) {
+      isLogged.value = true;
+      FirestoreService().getAllNotes();
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: SizedBox(
@@ -78,18 +89,14 @@ class _WidgetTreeState extends State<WidgetTree> {
         centerTitle: true,
         title: Text('Notez', style: TextStyle(fontSize: 25)),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingsPage(),
-                ),
-              );
-              //getData();
+          ValueListenableBuilder<bool>(
+            valueListenable: isLogged,
+            builder: (context, isLogged, child) {
+              if (isLogged) return Icon(Icons.person);
+              return Icon(Icons.person_off);
             },
-            icon: Icon(Icons.settings),
           ),
+          SizedBox(width: 15,)
         ],
         backgroundColor: CupertinoColors.placeholderText,
       ),

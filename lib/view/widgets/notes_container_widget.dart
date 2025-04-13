@@ -31,13 +31,17 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
               MaterialPageRoute(
                 builder: (context) => NotePage(id: widget.id),
               ),
-            ).then((value) {         //refresh text value in containers when come back
-              
+            ).then((value) {
+              //refresh text value in containers when come back
+
               setState(() {});
             });
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 20,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

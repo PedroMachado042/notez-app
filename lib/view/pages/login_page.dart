@@ -32,33 +32,37 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             SizedBox(height: 40),
-            widget.isRegistring? Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text('Username'),
-                ),
-                TextField(controller: usernameController),
-                SizedBox(height: 20),
-              ],
-            ):Column(),
+            widget.isRegistring
+                ? Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text('Username'),
+                    ),
+                    TextField(controller: usernameController),
+                    SizedBox(height: 20),
+                  ],
+                )
+                : Column(),
             SizedBox(width: double.infinity, child: Text('E-mail')),
             TextField(controller: emailController),
             SizedBox(height: 20),
             SizedBox(width: double.infinity, child: Text('Password')),
-            TextField(controller: passwordController),
+            TextField(controller: passwordController, obscureText: true,),
             SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
                   widget.isRegistring
-                      ? usernameController.text!=''? await AuthService().signup(
-                        username: usernameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                        context: context
-                      ):AuthService().noUsername()
+                      ? usernameController.text != ''
+                          ? await AuthService().signup(
+                            username: usernameController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                            context: context,
+                          )
+                          : AuthService().noUsername()
                       : await AuthService().signin(
                         email: emailController.text,
                         password: passwordController.text,

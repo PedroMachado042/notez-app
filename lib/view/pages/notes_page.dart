@@ -16,30 +16,34 @@ class _NotesPageState extends State<NotesPage> {
   void initState() {
     super.initState;
     notesLenght.value = notesBox.length;
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 20,
-      ),
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: ValueListenableBuilder<int>(
-          valueListenable: notesLenght,
-          builder: (context, value, child) {
-            return Column(
-              children: List.generate(
-                value,
-                (index) => NotesContainerWidget(id: index),
-              ),
-            );
-          },
-        ),
-      ),
+    return ValueListenableBuilder(
+      valueListenable: uiTrigger,
+      builder: (context, uiTrigger, child) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10.0,
+            vertical: 20,
+          ),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: ValueListenableBuilder<int>(
+              valueListenable: notesLenght,
+              builder: (context, value, child) {
+                return Column(
+                  children: List.generate(
+                    value,
+                    (index) => NotesContainerWidget(id: index),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
