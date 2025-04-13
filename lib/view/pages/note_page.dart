@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
@@ -16,6 +18,8 @@ class _NotePageState extends State<NotePage> {
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerTxt = TextEditingController();
   final FirestoreService firestoreService = FirestoreService();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
 
   // write data
   void writeData() {
@@ -78,11 +82,17 @@ class _NotePageState extends State<NotePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: false,
         child: Icon(Icons.check),
         onPressed: () {
-          firestoreService.addNote(controllerTitle.text);
+          firestoreService.addNote(widget.id);
+          //firestoreService.getNotes(widget.id);
+          controllerTitle.text = notesBox.get(widget.id)[0];
+          controllerTxt.text = notesBox.get(widget.id)[1];
+          setState(() {});
         },
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(

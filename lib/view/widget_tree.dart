@@ -22,7 +22,6 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   final notesBox = Hive.box('notesBox');
-  bool? isLogged;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,14 @@ class _WidgetTreeState extends State<WidgetTree> {
           },
         ),
       ),
-      drawer: Drawer(child: GuestPage()),
+      drawer: Drawer(
+        child: ValueListenableBuilder(
+          valueListenable: isLogged,
+          builder: (context, isLogged, child) {
+            return isLogged ? DrawerPage() : GuestPage();
+          },
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Notez', style: TextStyle(fontSize: 25)),

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:notez/view/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({
-    super.key,
-    required this.title,
-    required this.button_text,
-  });
-  final String title;
-  final String button_text;
+  const LoginPage({super.key, required this.isRegistring});
+  final bool isRegistring;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,22 +25,49 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             SizedBox(
               width: double.infinity,
-              child: Text(widget.title, style: TextStyle(fontSize: 30)),
+              child: Text(
+                widget.isRegistring ? 'Register' : 'Login',
+                style: TextStyle(fontSize: 30),
+              ),
             ),
+
             SizedBox(height: 40),
+            widget.isRegistring? Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text('Username'),
+                ),
+                TextField(controller: usernameController),
+                SizedBox(height: 20),
+              ],
+            ):Column(),
             SizedBox(width: double.infinity, child: Text('E-mail')),
-            TextField(),
+            TextField(controller: emailController),
             SizedBox(height: 20),
             SizedBox(width: double.infinity, child: Text('Password')),
-            TextField(),
+            TextField(controller: passwordController),
             SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  widget.isRegistring
+                      ? usernameController.text!=''? await AuthService().signup(
+                        username: usernameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        context: context
+                      ):AuthService().noUsername()
+                      : await AuthService().signin(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        context: context,
+                      );
+                },
                 child: Text(
-                  widget.button_text,
-                  style: TextStyle(fontSize: 18),
+                  widget.isRegistring ? 'Sign Up' : 'Sign In',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),

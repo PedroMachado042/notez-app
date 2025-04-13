@@ -1,8 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/settings_page.dart';
+import 'package:notez/view/services/auth_service.dart';
 
-class DrawerPage extends StatelessWidget {
+class DrawerPage extends StatefulWidget {
   const DrawerPage({super.key});
+
+  @override
+  State<DrawerPage> createState() => _DrawerPageState();
+}
+
+class _DrawerPageState extends State<DrawerPage> {
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +38,14 @@ class DrawerPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Pedro Machado',
+                    user!.displayName!,
                     style: TextStyle(
                       fontSize: 22,
                       color: Colors.white,
                     ),
                   ),
                   Text(
-                    'guest.sus@gmail.com',
+                    user!.email!,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white60,
@@ -64,12 +74,21 @@ class DrawerPage extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.logout),
           title: Text("Log Out"),
-          onTap: () {},
+          onTap: () {
+            isLogged.value = false;
+            AuthService().signout();
+          },
         ),
         ListTile(
-          leading: Icon(Icons.delete_forever,color: Colors.red,),
-          title: Text("Delete Account",style: TextStyle(color: Colors.red),),
-          onTap: () {},
+          leading: Icon(Icons.delete_forever, color: Colors.red),
+          title: Text(
+            "Delete Account",
+            style: TextStyle(color: Colors.red),
+          ),
+          onTap: () {
+            AuthService().signout();
+            AuthService().deleteAccount();
+          },
         ),
       ],
     );

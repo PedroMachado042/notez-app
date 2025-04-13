@@ -31,8 +31,7 @@ class GuestPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder:
                         (context) => LoginPage(
-                          title: 'Login',
-                          button_text: 'Sign In',
+                          isRegistring: false,
                         ),
                   ),
                 );
@@ -59,21 +58,20 @@ class GuestPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder:
                         (context) => LoginPage(
-                          title: 'Register',
-                          button_text: 'Sign Up',
+                          isRegistring: true,
                         ),
                   ),
                 );
               },
-              child: Text(
-                'Register',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black.withAlpha(40),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+              ),
+              child: Text(
+                'Register',
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
           ),

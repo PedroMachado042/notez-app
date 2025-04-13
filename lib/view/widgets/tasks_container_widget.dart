@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:notez/noti_service.dart';
 
 class TasksContainerWidget extends StatefulWidget {
@@ -72,10 +73,15 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
               splashColor: const Color.fromARGB(60, 0, 125, 100),
               borderRadius: BorderRadius.circular(10),
               onLongPress: () {
+                checkTimer?.cancel();
                 shiftValuesBack(widget.id);
                 tasksLenght.value -= 1;
               },
-              onTap: () {
+              onDoubleTap: () {
+                Fluttertoast.showToast(
+                  msg: 'Press and hold to delete',
+                  backgroundColor: Colors.black87,
+                );
                 print('passou o tempo: $passedTime');
                 setState(() {});
                 /*
