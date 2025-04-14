@@ -77,7 +77,7 @@ class _NotePageState extends State<NotePage> {
           PopupMenuButton(
             itemBuilder:
                 (context) => [
-                  PopupMenuItem(child: Text('Add Tag')),
+                  //PopupMenuItem(child: Text('Add Tag')),
                   PopupMenuItem(
                     child: Text('Delete'),
                     onTap: () {

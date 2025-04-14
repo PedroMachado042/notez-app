@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notez/view/services/firestore.dart';
 //import 'package:notez/noti_service.dart';
 
 class TasksContainerWidget extends StatefulWidget {
@@ -17,6 +20,7 @@ class TasksContainerWidget extends StatefulWidget {
 
 class _TasksContainerWidgetState extends State<TasksContainerWidget> {
   final tasksBox = Hive.box('tasksBox');
+  final User? user = FirebaseAuth.instance.currentUser;
   final AudioPlayer audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
   bool passedTime = false;
@@ -75,6 +79,9 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
               onLongPress: () {
                 checkTimer?.cancel();
                 shiftValuesBack(widget.id);
+                if (user != null) {
+                  shiftTasksBackInFirestore(widget.id);
+                }
                 tasksLenght.value -= 1;
               },
               onDoubleTap: () {
@@ -159,7 +166,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                         value: tasksBox.get(widget.id)[1],
                         onChanged: (value) {
                           setState(() {
-                            print(tasksBox.toMap());
+                            FirestoreService().addTask(widget.id);
                             value == true ? playSound() : 0;
                             tasksBox.put(widget.id, [
                               tasksBox.get(widget.id)[0],
@@ -215,5 +222,41 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
     tasksBox.delete(
       lastKey,
     ); // Remove the last entry to avoid duplicates
+  }
+
+  // MAIS UM DO GPT, APRENDER DEPOIS
+  Future<void> shiftTasksBackInFirestore(int missingKey) async {
+    final collection = FirebaseFirestore.instance.collection(
+      user!.email!,
+    );
+
+    // Descobrir o maior índice atual (última nota)
+    int lastKey = 0;
+    final snapshot = await collection.get();
+    for (var doc in snapshot.docs) {
+      final id = doc.id;
+      if (id.startsWith('tasks')) {
+        final index = int.tryParse(id.replaceFirst('tasks', ''));
+        if (index != null && index > lastKey) {
+          lastKey = index;
+        }
+      }
+    }
+
+    // Shift: mover notas seguintes para trás
+    for (int i = missingKey; i < lastKey; i++) {
+      final currentDoc = collection.doc('tasks$i');
+      final nextDoc = collection.doc('tasks${i + 1}');
+
+      final nextSnapshot = await nextDoc.get();
+      if (nextSnapshot.exists) {
+        await currentDoc.set(
+          nextSnapshot.data()!,
+        ); // copia os dados para o anterior
+      }
+    }
+
+    // Deleta o último documento duplicado
+    await collection.doc('tasks$lastKey').delete();
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/services/firestore.dart';
 
 class TaskCreateWidget extends StatefulWidget {
-  const TaskCreateWidget({super.key});
+  const TaskCreateWidget({super.key, required this.id});
+  final int id;
 
   @override
   State<TaskCreateWidget> createState() => _TaskCreateWidgetState();
@@ -48,7 +50,7 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.black38
+                color: Colors.black38,
               ),
 
               child: IconButton(
@@ -153,7 +155,7 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
                   Navigator.pop(context);
                   writeData();
                   tasksLenght.value = tasksBox.length;
-                  print(tasksBox.toMap());
+                  FirestoreService().addTask(widget.id);
                 }
               },
               child: Text(

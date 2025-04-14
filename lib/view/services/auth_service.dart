@@ -7,6 +7,9 @@ import 'package:notez/view/services/firestore.dart';
 
 class AuthService {
   final notesBox = Hive.box('notesBox');
+  final tasksBox = Hive.box('tasksBox');
+
+
   Future<void> signup({
     required String username,
     required String email,
@@ -22,7 +25,8 @@ class AuthService {
       await userCredential.user!.updateDisplayName(username);
       isLogged.value = true;
       Navigator.pop(context);
-      FirestoreService().getAllNotes();
+      await FirestoreService().getAllNotes();
+      await FirestoreService().getAllTasks();
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -56,7 +60,8 @@ class AuthService {
       );
       isLogged.value = true;
       Navigator.pop(context);
-      FirestoreService().getAllNotes();
+      await FirestoreService().getAllNotes();
+      await FirestoreService().getAllTasks();
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
@@ -79,6 +84,9 @@ class AuthService {
   Future<void> signout(bool delete) async {
     delete ? [await FirestoreService().deleteCollection(), await FirebaseAuth.instance.currentUser!.delete()]:await FirebaseAuth.instance.signOut();
     isLogged.value = false;
+    tasksLenght.value = 0;
+    tasksBox.clear();
+    print('signout');
     notesLenght.value = 0;
     notesBox.clear();
     print('signout');

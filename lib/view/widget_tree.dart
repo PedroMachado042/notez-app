@@ -23,6 +23,7 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   final notesBox = Hive.box('notesBox');
+  final tasksBox = Hive.box('tasksBox');
   final User? user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -32,6 +33,7 @@ class _WidgetTreeState extends State<WidgetTree> {
     if (user != null) {
       isLogged.value = true;
       FirestoreService().getAllNotes();
+      FirestoreService().getAllTasks();
     }
   }
 
@@ -70,7 +72,7 @@ class _WidgetTreeState extends State<WidgetTree> {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return TaskCreateWidget();
+                  return TaskCreateWidget(id: tasksBox.length);
                 },
               );
             }
