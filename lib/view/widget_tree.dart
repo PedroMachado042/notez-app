@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/drawer/drawer_guest_page.dart';
 import 'package:notez/view/pages/drawer/drawer_page.dart';
@@ -26,8 +27,6 @@ class _WidgetTreeState extends State<WidgetTree> {
   final tasksBox = Hive.box('tasksBox');
   final User? user = FirebaseAuth.instance.currentUser;
 
-  
-
   @override
   @override
   void initState() {
@@ -36,6 +35,12 @@ class _WidgetTreeState extends State<WidgetTree> {
       isLogged.value = true;
       FirestoreService().getAllNotes();
       FirestoreService().getAllTasks();
+    }
+    if (!isLogged.value &&
+        notesBox.get(0) == null &&
+        tasksBox.get(0) == null) {
+      welcomeNote();
+      print('Welcome Note');
     }
   }
 

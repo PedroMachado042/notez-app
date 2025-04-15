@@ -67,8 +67,6 @@ class FirestoreService {
         i += 1;
       }
     }
-    print(notesBox.toMap());
-    print('notes lengh: $i');
     notesLenght.value = i;
     uiTrigger.value++;
   }
@@ -125,8 +123,6 @@ class FirestoreService {
         i += 1;
       }
     }
-    print(tasksBox.toMap());
-    print('taks lengh: $i');
     tasksLenght.value = i;
     uiTrigger.value++;
   }

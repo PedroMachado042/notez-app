@@ -1,6 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 
+final notesBox = Hive.box('notesBox');
+final tasksBox = Hive.box('tasksBox');
 void loadDummy() {
   List n = [
     [
@@ -50,10 +52,11 @@ Código Limpo""",
 -Confúcio''',
     ],
   ];
-  List t = [['Ler um livro', false,0], ['Cortar a grama', false,DateTime.now()], ['Ir ao mercado', false,0], ];
-
-  final notesBox = Hive.box('notesBox');
-  final tasksBox = Hive.box('tasksBox');
+  List t = [
+    ['Ler um livro', false, 0],
+    ['Cortar a grama', false, DateTime.now()],
+    ['Ir ao mercado', false, 0],
+  ];
 
   t.forEach((i) {
     tasksBox.put(t.indexOf(i), t[t.indexOf(i)]);
@@ -64,4 +67,21 @@ Código Limpo""",
     notesBox.put(n.indexOf(i), n[n.indexOf(i)]);
   });
   notesLenght.value = notesBox.length;
+}
+
+void welcomeNote() {
+  List wn = [
+    'Welcome to Notez! ⚜️💬',
+    '''Hey, so out of all notes apps you installed mine, thanks!
+
+Notez is a minimalist note-taking app I created to help with my own lack of organization. It has a cloud storage, so you can access your notes from any device!
+
+I hope you find it usefull! Stay creative! 👊''',
+  ];
+  List wt = ['Rate the app ⭐', false, 0];
+
+  notesBox.put(0, [wn[0], wn[1]]);
+  tasksBox.put(0, [wt[0], wt[1], wt[2]]);
+  notesLenght.value++;
+  tasksLenght.value++;
 }

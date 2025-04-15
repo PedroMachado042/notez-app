@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final notesBox = Hive.box('notesBox');
   final tasksBox = Hive.box('tasksBox');
+  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +28,25 @@ class _SettingsPageState extends State<SettingsPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             spacing: 30,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Enable Epic Soundeffects',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Switch(
+                    activeColor: Colors.teal[400],
+                    value: hasSound.value,
+                    onChanged: (bool value) {
+                      setState(() {
+                        hasSound.value = value;
+                        print(hasSound.value);
+                      });
+                    },
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 50,
                 width: double.infinity,

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/services/auth_service.dart';
 
@@ -57,8 +58,16 @@ class _DrawerPageState extends State<DrawerPage> {
         ),
         ListTile(
           leading: Icon(Icons.edit),
-          title: Text("Edit Profile"),
-          onTap: () {},
+          title: Text(
+            "Edit Profile",
+          ),
+          onTap: () {
+            Fluttertoast.showToast(
+                  msg: 'Function not added yet :(',
+                  backgroundColor: Colors.black87,
+                );
+            print(user);
+          },
         ),
         ListTile(
           leading: Icon(Icons.settings),
@@ -93,7 +102,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   content: Text('there is no coming back, bro'),
                   actions: [
                     FilledButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         Navigator.pop(context);
                         AuthService().signout(true);
                       },

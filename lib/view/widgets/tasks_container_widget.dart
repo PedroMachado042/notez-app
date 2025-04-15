@@ -47,7 +47,6 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
 
   void checkTime() {
     DateTime taskTime = tasksBox.get(widget.id)[2];
-    print('checando');
     if (taskTime.isBefore(DateTime.now())) {
       if (!passedTime) {
         setState(() {
@@ -89,7 +88,6 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                   msg: 'Press and hold to delete',
                   backgroundColor: Colors.black87,
                 );
-                print('passou o tempo: $passedTime');
                 /*
                 NotiService().showNotification(
                   title: 'Notez',
@@ -165,14 +163,16 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                         value: tasksBox.get(widget.id)[1],
                         onChanged: (value) {
                           setState(() {
-                            value == true ? playSound() : 0;
+                            value == true && hasSound.value ? playSound() : 0;
                             tasksBox.put(widget.id, [
                               tasksBox.get(widget.id)[0],
                               value,
                               tasksBox.get(widget.id)[2],
                             ]);
-                            FirestoreService().addTask(widget.id);
-                            print(tasksBox.toMap());
+                            if(isLogged.value)
+                            {
+                              FirestoreService().addTask(widget.id);
+                            }
                           });
                         },
                       ),

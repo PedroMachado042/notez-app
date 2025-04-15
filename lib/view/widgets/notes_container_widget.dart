@@ -63,7 +63,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  isLogged.value ? '24/04 16:20' : '16:20', //horario
+                  isLogged.value ? '16:20' : '16:20', //horario
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
