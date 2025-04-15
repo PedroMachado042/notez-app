@@ -6,8 +6,13 @@ import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/services/firestore.dart';
 
 class NotePage extends StatefulWidget {
-  const NotePage({super.key, required this.id});
+  const NotePage({
+    super.key,
+    required this.id,
+    required this.canDelete,
+  });
   final int id;
+  final bool canDelete;
 
   @override
   State<NotePage> createState() => _NotePageState();
@@ -62,73 +67,76 @@ class _NotePageState extends State<NotePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            if (user != null) {
-              firestoreService.addNote(widget.id);
-            }
-            Navigator.pop(context);
-          },
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        if (isLogged.value && controllerTitle.text != '') {
+          FirestoreService().addNote(widget.id);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          actions:
+              widget.canDelete
+                  ? [
+                    PopupMenuButton(
+                      itemBuilder:
+                          (context) => [
+                            //PopupMenuItem(child: Text('Add Tag')),
+                            PopupMenuItem(
+                              child: Text('Delete'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                shiftValuesBack(widget.id);
+                                if (isLogged.value) {
+                                  shiftNotesBackInFirestore(
+                                    widget.id,
+                                  );
+                                }
+                                notesLenght.value -= 1;
+                              },
+                            ),
+                          ],
+                    ),
+                  ]
+                  : [],
         ),
-        actions: [
-          PopupMenuButton(
-            itemBuilder:
-                (context) => [
-                  //PopupMenuItem(child: Text('Add Tag')),
-                  PopupMenuItem(
-                    child: Text('Delete'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      shiftValuesBack(widget.id);
-                      if (user != null) {
-                        shiftNotesBackInFirestore(widget.id);
-                      }
-                      notesLenght.value -= 1;
-                    },
-                  ),
-                ],
-          ),
-        ],
-      ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 30,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                //Titulo
-                onChanged: (value) => writeData(),
-                controller: controllerTitle,
-                style: TextStyle(fontSize: 30),
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white30),
-                  hintText: 'Title',
-                  border: InputBorder.none,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 30,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  //Titulo
+                  onChanged: (value) => writeData(),
+                  controller: controllerTitle,
+                  style: TextStyle(fontSize: 30),
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white30),
+                    hintText: 'Title',
+                    border: InputBorder.none,
+                  ),
                 ),
-              ),
-              Divider(height: 30),
-              TextField(
-                //Corpo do texto
-                onChanged: (value) => writeData(),
-                controller: controllerTxt,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                style: TextStyle(height: 2.2, fontSize: 16),
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white30),
-                  hintText: 'Write your notes in here...',
-                  border: InputBorder.none,
+                Divider(height: 30),
+                TextField(
+                  //Corpo do texto
+                  onChanged: (value) => writeData(),
+                  controller: controllerTxt,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  style: TextStyle(height: 2.2, fontSize: 16),
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white30),
+                    hintText: 'Write your notes in here...',
+                    border: InputBorder.none,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -157,7 +165,7 @@ class _NotePageState extends State<NotePage> {
     final collection = FirebaseFirestore.instance.collection(
       user!.email!,
     );
-    
+
     // Descobrir o maior índice atual (última nota)
     int lastKey = 0;
     final snapshot = await collection.get();

@@ -46,7 +46,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                   child: Text(
                     'Load test notes',
-                    style: TextStyle(fontSize: 18,color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -82,18 +85,29 @@ class _SettingsPageState extends State<SettingsPage> {
                                 tasksBox.clear();
                                 tasksLenght.value = 0;
                                 FirestoreService().deleteCollection();
-                              },style: TextButton.styleFrom(
-    backgroundColor: const Color.fromARGB(255, 26, 26, 26),
-    foregroundColor: Colors.redAccent,
-    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
-    ),
-    textStyle: const TextStyle(
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.5,
-    ),
-  ),
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(
+                                  255,
+                                  26,
+                                  26,
+                                  26,
+                                ),
+                                foregroundColor: Colors.redAccent,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 28,
+                                  vertical: 14,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    18,
+                                  ),
+                                ),
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
                               child: Text(
                                 'Delete',
                                 style: TextStyle(color: Colors.red),
@@ -102,18 +116,26 @@ class _SettingsPageState extends State<SettingsPage> {
                             FilledButton(
                               onPressed: () {
                                 Navigator.pop(context);
-                              },style: TextButton.styleFrom(
-    backgroundColor: const Color(0xFFD0BFFF), // soft lavender
-    foregroundColor: Colors.black87,
-    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
-    ),
-    textStyle: const TextStyle(
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.5,
-    ),
-  ),
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: const Color(
+                                  0xFFD0BFFF,
+                                ), // soft lavender
+                                foregroundColor: Colors.black87,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 28,
+                                  vertical: 14,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    18,
+                                  ),
+                                ),
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
                               child: Text('Close'),
                             ),
                           ],
@@ -123,7 +145,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                   child: Text(
                     'Delete All Notes',
-                    style: TextStyle(fontSize: 18,color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

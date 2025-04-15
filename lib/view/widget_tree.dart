@@ -26,6 +26,8 @@ class _WidgetTreeState extends State<WidgetTree> {
   final tasksBox = Hive.box('tasksBox');
   final User? user = FirebaseAuth.instance.currentUser;
 
+  
+
   @override
   @override
   void initState() {
@@ -56,11 +58,14 @@ class _WidgetTreeState extends State<WidgetTree> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NotePage(id: notesBox.length),
+                  builder:
+                      (context) => NotePage(
+                        id: notesBox.length,
+                        canDelete: false,
+                      ),
                 ),
               ).then((value) {
                 //refresh text value in containers when come back
-                print(notesBox.toMap());
                 notesLenght.value = notesBox.length;
                 if (notesBox.get(notesBox.length - 1)[0] == '') {
                   //null title safety
@@ -98,7 +103,7 @@ class _WidgetTreeState extends State<WidgetTree> {
               return Icon(Icons.person_off);
             },
           ),
-          SizedBox(width: 15,)
+          SizedBox(width: 15),
         ],
         backgroundColor: CupertinoColors.placeholderText,
       ),

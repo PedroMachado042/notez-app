@@ -120,7 +120,7 @@ class FirestoreService {
         tasksBox.put(i, [
           doc['title'],
           doc['isChecked'],
-          doc['time'] is int?doc['time']:doc['time'].toDate(),
+          doc['time'] is int ? doc['time'] : doc['time'].toDate(),
         ]);
         i += 1;
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/note_page.dart';
 
 class NotesContainerWidget extends StatefulWidget {
@@ -13,6 +14,7 @@ class NotesContainerWidget extends StatefulWidget {
 
 class _NotesContainerWidgetState extends State<NotesContainerWidget> {
   final notesBox = Hive.box('notesBox');
+  String? noteTime;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +31,12 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NotePage(id: widget.id),
+                builder:
+                    (context) =>
+                        NotePage(id: widget.id, canDelete: true),
               ),
             ).then((value) {
               //refresh text value in containers when come back
-
               setState(() {});
             });
           },
@@ -60,7 +63,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  '16:20', //horario
+                  isLogged.value ? '24/04 16:20' : '16:20', //horario
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],

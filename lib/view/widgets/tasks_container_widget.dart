@@ -90,7 +90,6 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                   backgroundColor: Colors.black87,
                 );
                 print('passou o tempo: $passedTime');
-                setState(() {});
                 /*
                 NotiService().showNotification(
                   title: 'Notez',
@@ -166,13 +165,14 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                         value: tasksBox.get(widget.id)[1],
                         onChanged: (value) {
                           setState(() {
-                            FirestoreService().addTask(widget.id);
                             value == true ? playSound() : 0;
                             tasksBox.put(widget.id, [
                               tasksBox.get(widget.id)[0],
                               value,
                               tasksBox.get(widget.id)[2],
                             ]);
+                            FirestoreService().addTask(widget.id);
+                            print(tasksBox.toMap());
                           });
                         },
                       ),
