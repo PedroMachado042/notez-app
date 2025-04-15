@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notez/view/pages/login_page.dart';
 
 class GuestPage extends StatelessWidget {
@@ -30,9 +31,7 @@ class GuestPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => LoginPage(
-                          isRegistring: false,
-                        ),
+                        (context) => LoginPage(isRegistring: false),
                   ),
                 );
               },
@@ -57,9 +56,7 @@ class GuestPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => LoginPage(
-                          isRegistring: true,
-                        ),
+                        (context) => LoginPage(isRegistring: true),
                   ),
                 );
               },
@@ -77,7 +74,12 @@ class GuestPage extends StatelessWidget {
           ),
           Divider(color: Colors.grey[700]),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Function not added yet :(',
+                backgroundColor: Colors.black87,
+              );
+            },
             icon: Image.asset(
               'assets/images/google_logo.png',
               height: 25,
