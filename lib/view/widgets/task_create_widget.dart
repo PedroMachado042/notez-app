@@ -39,7 +39,6 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
       content: Row(
         children: [
           Expanded(child: TextField(controller: controllerInput)),
-          Icon(Icons.square_outlined),
         ],
       ),
       actions: [

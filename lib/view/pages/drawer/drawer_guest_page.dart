@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notez/view/pages/login_page.dart';
+import 'package:notez/view/services/auth_service.dart';
 
 class GuestPage extends StatelessWidget {
   const GuestPage({super.key});
@@ -75,10 +75,7 @@ class GuestPage extends StatelessWidget {
           Divider(color: Colors.grey[700]),
           IconButton(
             onPressed: () {
-              Fluttertoast.showToast(
-                msg: 'Function not added yet :(',
-                backgroundColor: Colors.black87,
-              );
+              AuthService().signInWithGoogle();
             },
             icon: Image.asset(
               'assets/images/google_logo.png',

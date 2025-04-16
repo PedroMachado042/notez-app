@@ -52,7 +52,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
                   notesBox.get(widget.id)[0].toString(), //Titulo
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.teal, fontSize: 20),
+                  style: TextStyle(color: Colors.teal,  fontSize: 20),
                 ),
                 Text(
                   notesBox

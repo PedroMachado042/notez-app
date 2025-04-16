@@ -85,6 +85,7 @@ class _NotePageState extends State<NotePage> {
                             PopupMenuItem(
                               child: Text('Delete'),
                               onTap: () {
+                                print(user);
                                 Navigator.pop(context);
                                 shiftValuesBack(widget.id);
                                 if (isLogged.value) {

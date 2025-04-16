@@ -137,4 +137,5 @@ class FirestoreService {
       await doc.reference.delete();
     }
   }
+
 }

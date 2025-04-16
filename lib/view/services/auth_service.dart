@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/services/firestore.dart';
 
 class AuthService {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final notesBox = Hive.box('notesBox');
   final tasksBox = Hive.box('tasksBox');
-
 
   Future<void> signup({
     required String username,
@@ -82,7 +83,12 @@ class AuthService {
   //--------------------------------------------------------------------------
 
   Future<void> signout(bool delete) async {
-    delete ? [await FirestoreService().deleteCollection(), await FirebaseAuth.instance.currentUser!.delete()]:await FirebaseAuth.instance.signOut();
+    delete
+        ? [
+          await FirestoreService().deleteCollection(),
+          await FirebaseAuth.instance.currentUser!.delete(),
+        ]
+        : await FirebaseAuth.instance.signOut();
     isLogged.value = false;
     tasksLenght.value = 0;
     tasksBox.clear();
@@ -99,5 +105,26 @@ class AuthService {
       msg: 'Type a username',
       backgroundColor: Colors.black87,
     );
+  }
+
+  Future<void> signInWithGoogle() async {
+
+    await GoogleSignIn().signOut();
+
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+    if (gUser == null) return;
+
+    final GoogleSignInAuthentication gAuth =
+        await gUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
+    await firebaseAuth.signInWithCredential(credential);
+    isLogged.value = true;
+    await FirestoreService().getAllNotes();
+    await FirestoreService().getAllTasks();
   }
 }

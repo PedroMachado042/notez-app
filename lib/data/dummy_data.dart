@@ -1,8 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notez/data/notifiers.dart';
 
 final notesBox = Hive.box('notesBox');
 final tasksBox = Hive.box('tasksBox');
+
+class DummyData{
+  static List<Color> mainColor = [Colors.teal, Colors.green, Colors.pinkAccent];
+
+  final List<Color> buttonColor = [
+    Color.fromARGB(255, 6, 99, 92),
+  ]; //green Color.fromARGB(255, 1, 87, 45),
+
+  final List<Color> inkwellColor = [
+    const Color.fromARGB(60, 0, 125, 100),
+  ];
+}
+
 void loadDummy() {
   List n = [
     [

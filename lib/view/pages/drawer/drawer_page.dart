@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notez/data/dummy_data.dart';
+import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/services/auth_service.dart';
 
@@ -23,7 +25,7 @@ class _DrawerPageState extends State<DrawerPage> {
             Container(
               width: double.infinity,
               height: 220,
-              color: Colors.teal.withAlpha(100),
+              color: DummyData.mainColor[colorTheme.value].withAlpha(100),
             ),
             Center(
               child: Column(
@@ -32,9 +34,10 @@ class _DrawerPageState extends State<DrawerPage> {
                   SizedBox(height: 50),
                   CircleAvatar(
                     radius: 45,
-                    backgroundImage: AssetImage(
-                      'assets/images/aaaa.png',
-                    ),
+                    backgroundImage:
+                        user?.photoURL != null
+                            ? NetworkImage(user!.photoURL!)
+                            : AssetImage('assets/images/aaaa.png'),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -58,14 +61,12 @@ class _DrawerPageState extends State<DrawerPage> {
         ),
         ListTile(
           leading: Icon(Icons.edit),
-          title: Text(
-            "Edit Profile",
-          ),
+          title: Text("Edit Profile"),
           onTap: () {
             Fluttertoast.showToast(
-                  msg: 'Function not added yet :(',
-                  backgroundColor: Colors.black87,
-                );
+              msg: 'Function not added yet :(',
+              backgroundColor: Colors.black87,
+            );
             print(user);
           },
         ),

@@ -6,3 +6,4 @@ ValueNotifier<int> tasksLenght = ValueNotifier(0);
 ValueNotifier<bool> isLogged = ValueNotifier(false);
 ValueNotifier<bool> hasSound = ValueNotifier(false);
 ValueNotifier<int> uiTrigger = ValueNotifier<int>(1);
+ValueNotifier<int> colorTheme = ValueNotifier<int>(0);
