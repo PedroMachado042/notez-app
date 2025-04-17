@@ -41,7 +41,7 @@ class FirestoreService {
     uiTrigger.value++;
   }
 
-  //------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
 
   Future<void> getNotes(int id) async {
     DocumentSnapshot snapshot =
@@ -71,7 +71,7 @@ class FirestoreService {
     uiTrigger.value++;
   }
 
-  //------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   Future<void> addTask(int id) {
     return firestore.collection(user!.email!).doc('tasks$id').set({
       'title': tasksBox.get(id)[0],
@@ -137,5 +137,5 @@ class FirestoreService {
       await doc.reference.delete();
     }
   }
-
+  //----------------------------------------------------------------------------
 }

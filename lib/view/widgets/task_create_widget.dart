@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/services/firestore.dart';
 
@@ -101,12 +102,7 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: Size(160, 50),
                                     backgroundColor:
-                                        const Color.fromARGB(
-                                          255,
-                                          6,
-                                          99,
-                                          92,
-                                        ),
+                                        DummyData.buttonColor[colorTheme.value]
                                   ),
                                   onPressed: () {
                                     dateTime = pickerTime;
@@ -133,7 +129,7 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
                 },
                 icon: Icon(
                   Icons.alarm,
-                  color: hasReminder ? Colors.teal : Colors.white,
+                  color: hasReminder ? DummyData.mainColor[colorTheme.value] : Colors.white,
                 ),
               ),
             ),
@@ -143,7 +139,7 @@ class _TaskCreateWidgetState extends State<TaskCreateWidget> {
                 hasReminder
                     ? '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}'
                     : '',
-                style: TextStyle(fontSize: 18, color: Colors.teal),
+                style: TextStyle(fontSize: 18, color: DummyData.mainColor[colorTheme.value]),
               ),
             ),
             ElevatedButton(

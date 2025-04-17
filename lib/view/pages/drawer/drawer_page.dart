@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
+import 'package:notez/view/pages/profile_page.dart';
 import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/services/auth_service.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({super.key});
@@ -25,7 +26,9 @@ class _DrawerPageState extends State<DrawerPage> {
             Container(
               width: double.infinity,
               height: 220,
-              color: DummyData.mainColor[colorTheme.value].withAlpha(100),
+              color: DummyData.mainColor[colorTheme.value].withAlpha(
+                100,
+              ),
             ),
             Center(
               child: Column(
@@ -63,12 +66,68 @@ class _DrawerPageState extends State<DrawerPage> {
           leading: Icon(Icons.edit),
           title: Text("Edit Profile"),
           onTap: () {
-            Fluttertoast.showToast(
-              msg: 'Function not added yet :(',
-              backgroundColor: Colors.black87,
-            );
             print(user);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
           },
+        ),
+        PopupMenuButton<String>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          constraints: BoxConstraints.loose(Size(70, 300)),
+          offset: const Offset(70, 0),
+          itemBuilder:
+              (context) => [
+                const PopupMenuItem(
+                  value: '1',
+                  child: Icon(
+                    Icons.invert_colors,
+                    color: Colors.teal,
+                    size: 32,
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: '2',
+                  child: Icon(
+                    Icons.invert_colors,
+                    color: Colors.green,
+                    size: 32,
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: '3',
+                  child: Icon(
+                    Icons.invert_colors,
+                    color: Colors.pinkAccent,
+                    size: 32,
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: '4',
+                  child: Icon(
+                    Icons.invert_colors,
+                    color: Colors.deepPurple,
+                    size: 32,
+                  ),
+                ),
+              ],
+          onSelected: (value) {
+            // Handle selected value here
+            print('Selected theme: $value');
+            colorTheme.value = int.parse(value) - 1;
+            Phoenix.rebirth(context);
+          },
+          child: ListTile(
+            leading: Icon(Icons.color_lens),
+            title: Text("Theme Color"),
+            trailing: Icon(
+              Icons.invert_colors,
+              color: DummyData.mainColor[colorTheme.value],
+            ), // You can update color based on selection
+          ),
         ),
         ListTile(
           leading: Icon(Icons.settings),

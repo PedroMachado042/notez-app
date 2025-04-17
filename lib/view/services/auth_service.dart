@@ -106,7 +106,17 @@ class AuthService {
       backgroundColor: Colors.black87,
     );
   }
+  
+  Future<void> updateUsername(String newUsername) async {
+    User? user = FirebaseAuth.instance.currentUser;
 
+    if (user != null) {
+      await user.updateDisplayName(newUsername);
+      await user.reload();
+      user = FirebaseAuth.instance.currentUser; 
+    }
+  }
+  
   Future<void> signInWithGoogle() async {
 
     await GoogleSignIn().signOut();

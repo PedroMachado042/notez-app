@@ -6,14 +6,14 @@ final notesBox = Hive.box('notesBox');
 final tasksBox = Hive.box('tasksBox');
 
 class DummyData{
-  static List<Color> mainColor = [Colors.teal, Colors.green, Colors.pinkAccent];
+  static List<Color> mainColor = [Colors.teal, Colors.green, Colors.pinkAccent, Colors.deepPurple];
 
-  final List<Color> buttonColor = [
-    Color.fromARGB(255, 6, 99, 92),
-  ]; //green Color.fromARGB(255, 1, 87, 45),
+  static List<Color> buttonColor = [
+    Color.fromARGB(255, 6, 99, 92),Color.fromARGB(255, 1, 87, 45),const Color.fromARGB(255, 223, 36, 98),Colors.deepPurple
+  ]; //
 
-  final List<Color> inkwellColor = [
-    const Color.fromARGB(60, 0, 125, 100),
+  static List<Color> inkwellColor = [
+    const Color.fromARGB(60, 0, 125, 100),const Color.fromARGB(60, 76, 175, 79),const Color.fromARGB(60, 233, 30, 98),const Color.fromARGB(60, 104, 58, 183)
   ];
 }
 

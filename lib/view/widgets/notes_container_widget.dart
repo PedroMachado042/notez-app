@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/note_page.dart';
 
@@ -25,7 +26,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
         elevation: 10,
         child: InkWell(
           highlightColor: const Color.fromARGB(20, 0, 125, 100),
-          splashColor: const Color.fromARGB(60, 0, 125, 100),
+          splashColor: DummyData.inkwellColor[colorTheme.value],
           borderRadius: BorderRadius.circular(10),
           onTap: () {
             Navigator.push(
@@ -52,7 +53,7 @@ class _NotesContainerWidgetState extends State<NotesContainerWidget> {
                   notesBox.get(widget.id)[0].toString(), //Titulo
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.teal,  fontSize: 20),
+                  style: TextStyle(color: DummyData.mainColor[colorTheme.value],  fontSize: 20),
                 ),
                 Text(
                   notesBox

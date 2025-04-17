@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
@@ -73,7 +74,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
             elevation: 10,
             child: InkWell(
               highlightColor: const Color.fromARGB(20, 0, 125, 100),
-              splashColor: const Color.fromARGB(60, 0, 125, 100),
+              splashColor: DummyData.inkwellColor[colorTheme.value],
               borderRadius: BorderRadius.circular(10),
               onLongPress: () {
                 checkTimer?.cancel();
@@ -131,7 +132,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                                               widget.id,
                                             )[1]
                                         ? Colors.red
-                                        : Colors.teal,
+                                        : DummyData.mainColor[colorTheme.value],
                                 size: 17,
                               ),
                               Text(
@@ -158,7 +159,7 @@ class _TasksContainerWidgetState extends State<TasksContainerWidget> {
                     Transform.scale(
                       scale: 1.5,
                       child: Checkbox(
-                        activeColor: Colors.teal,
+                        activeColor: DummyData.mainColor[colorTheme.value],
                         checkColor: Colors.black,
                         value: tasksBox.get(widget.id)[1],
                         onChanged: (value) {

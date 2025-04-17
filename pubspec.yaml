@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.2.12
   firebase_auth: ^5.5.2
   google_sign_in: ^6.3.0
+  flutter_phoenix: ^1.1.1
 
   # Database
   #cloud_firestore:
