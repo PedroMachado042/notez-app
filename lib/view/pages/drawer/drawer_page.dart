@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/pages/profile_page.dart';
-import 'package:notez/view/pages/settings_page.dart';
+//import 'package:notez/view/pages/settings_page.dart';
 import 'package:notez/view/services/auth_service.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
@@ -16,6 +17,7 @@ class DrawerPage extends StatefulWidget {
 
 class _DrawerPageState extends State<DrawerPage> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final prefsBox = Hive.box('prefsBox');
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +117,8 @@ class _DrawerPageState extends State<DrawerPage> {
                 ),
               ],
           onSelected: (value) {
-            // Handle selected value here
-            print('Selected theme: $value');
             colorTheme.value = int.parse(value) - 1;
+            prefsBox.put(0, colorTheme.value);
             Phoenix.rebirth(context);
           },
           child: ListTile(
@@ -126,9 +127,10 @@ class _DrawerPageState extends State<DrawerPage> {
             trailing: Icon(
               Icons.invert_colors,
               color: DummyData.mainColor[colorTheme.value],
-            ), // You can update color based on selection
+            ),
           ),
         ),
+        /*
         ListTile(
           leading: Icon(Icons.settings),
           title: Text("Settings"),
@@ -138,7 +140,7 @@ class _DrawerPageState extends State<DrawerPage> {
               MaterialPageRoute(builder: (context) => SettingsPage()),
             );
           },
-        ),
+        ),*/
         ListTile(
           leading: Icon(Icons.logout),
           title: Text("Log Out"),

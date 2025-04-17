@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         user?.photoURL != null
                             ? NetworkImage(user!.photoURL!)
                             : AssetImage('assets/images/aaaa.png'),
-                  ),
+                  ),/*
                   Positioned(
                     bottom: -5,
                     right: -10,
@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {},
                       child: Icon(Icons.edit, color: Colors.white),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
               SizedBox(

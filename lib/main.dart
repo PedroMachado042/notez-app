@@ -16,7 +16,8 @@ void main() async {
   var notesBox = await Hive.openBox('notesBox');
   // ignore: unused_local_variable
   var tasksBox = await Hive.openBox('tasksBox');
-  
+  // ignore: unused_local_variable
+  var prefsBox = await Hive.openBox('prefsBox');
   //init notifications
   //final notiService = NotiService();
   //await notiService.initNotification();

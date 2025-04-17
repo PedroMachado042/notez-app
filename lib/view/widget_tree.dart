@@ -25,6 +25,7 @@ class WidgetTree extends StatefulWidget {
 class _WidgetTreeState extends State<WidgetTree> {
   final notesBox = Hive.box('notesBox');
   final tasksBox = Hive.box('tasksBox');
+  final prefsBox = Hive.box('prefsBox');
   final User? user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -42,6 +43,10 @@ class _WidgetTreeState extends State<WidgetTree> {
       welcomeNote();
       print('Welcome Note');
     }
+    if(prefsBox.get(0) != null)
+    {
+      colorTheme.value = prefsBox.get(0);
+    }
   }
 
   Widget build(BuildContext context) {
@@ -50,7 +55,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         height: 60,
         width: 60,
         child: FloatingActionButton(
-          backgroundColor: DummyData.buttonColor[colorTheme.value], 
+          backgroundColor: DummyData.buttonColor[colorTheme.value],
           //(160, 0, 150, 135)
           shape: CircleBorder(),
           child: Icon(Icons.add, size: 35),
