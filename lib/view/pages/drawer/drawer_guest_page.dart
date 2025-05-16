@@ -35,15 +35,15 @@ class GuestPage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(
-                'Login',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black.withAlpha(40),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
           ),

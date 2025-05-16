@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notez/data/dummy_data.dart';
 import 'package:notez/data/notifiers.dart';
 import 'package:notez/view/services/firestore.dart';
 
@@ -137,6 +138,28 @@ class _NotePageState extends State<NotePage> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15,
+            horizontal: 5,
+          ),
+          child: SizedBox(
+            height: 60,
+            width: 60,
+            child: FloatingActionButton(
+              onPressed: () async {
+                if (isLogged.value && controllerTitle.text != '') {
+                  await FirestoreService().addNote(widget.id);
+                }
+                Navigator.pop(context);
+              },
+              heroTag: null,
+              backgroundColor:
+                  DummyData.buttonColor[colorTheme.value],
+              child: Icon(Icons.check, size: 32),
             ),
           ),
         ),
