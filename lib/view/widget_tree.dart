@@ -55,6 +55,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         height: 60,
         width: 60,
         child: FloatingActionButton(
+          heroTag: false,
           backgroundColor: DummyData.buttonColor[colorTheme.value],
           //(160, 0, 150, 135)
           shape: CircleBorder(),

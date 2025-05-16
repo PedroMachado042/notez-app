@@ -1,4 +1,4 @@
-package com.example.notez
+package com.peti.notez
 
 import io.flutter.embedding.android.FlutterActivity
 

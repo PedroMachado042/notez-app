@@ -7,12 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:439184090954:android:5f917edb8b988b55ba83b3",
+        "mobilesdk_app_id": "1:439184090954:android:347d1085741ca1b8ba83b3",
         "android_client_info": {
-          "package_name": "com.example.notez"
+          "package_name": "com.peti.notez"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "439184090954-3km9pluger641t2d5hf0k6kassv9812h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peti.notez",
+            "certificate_hash": "ad75ad88cf1fc3634a48bfd35f41ded3efb8992b"
+          }
+        },
+        {
+          "client_id": "439184090954-ascetmt8o17695e8op58g8tsdgs7fnv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDJ0HOSY4hbvPSCq7cDw6yAZqxcS03jzOs"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439184090954-ascetmt8o17695e8op58g8tsdgs7fnv5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
