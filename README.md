@@ -17,8 +17,8 @@ Aplicativo completo de anotações e tarefas, desenvolvido em Flutter com backen
 - Armazenamento em nuvem e sincronização em tempo real
 - UI/UX centrada na experiência do usuário
 
-Contexto do projeto:
+## Contexto do projeto:
 
-Notez foi criado como uma solução prática para pessoas que buscam organizar seu dia a dia de forma simples e eficiente. Seja para anotar ideias, criar listas de tarefas ou planejar atividades, o app oferece uma experiência intuitiva e segura, com armazenamento em nuvem que garante que seus dados estejam sempre acessíveis, em qualquer lugar.
+Notez foi criado como uma solução prática para a minha própria desorganização ao lidar com as tarefas do dia a dia.  Seja para anotar ideias, criar listas de tarefas ou planejar atividades, o app oferece uma experiência intuitiva e segura, com armazenamento em nuvem que garante que seus dados estejam sempre acessíveis, em qualquer lugar.
 
 Ideal para estudantes, profissionais e qualquer pessoa que queira manter a produtividade em dia com praticidade e estilo.
